@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大肥鱼小说下载器</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+                  <div class="brand-mark"><img src="whale.png" alt="大肥鱼"></div>
+      <div class="brand-text"><strong>大肥鱼</strong><span>小说下载器</span></div>
+    </div>
+
+    <nav class="nav">
+      <a href="#status"  data-page="status"  class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M3 13h4v8H3zM10 3h4v18h-4zM17 9h4v12h-4z"/></svg><span>状态</span></a>
+      <a href="#search"  data-page="search"  class="nav-item">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg><span>搜索下载</span></a>
+      <a href="#jobs"    data-page="jobs"    class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M12 3v9l6 3"/><circle cx="12" cy="12" r="9"/></svg><span>任务</span><em class="dot" id="jobsDot" hidden></em></a>
+      <a href="#history" data-page="history" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>下载历史</span></a>
+      <a href="#updates" data-page="updates" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 18h14"/></svg><span>检查更新</span></a>
+      <a href="#library" data-page="library" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M4 5h6l2 2h8v12H4z"/></svg><span>下载库</span></a>
+      <a href="#config"  data-page="config"  class="nav-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.4M12 18.6V21M3 12h2.4M18.6 12H21M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7"/></svg><span>配置</span></a>
+    </nav>
+
+    <div class="rail-foot">
+      <button class="icon-btn" id="themeBtn" title="切换主题">
+        <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></svg>
+      </button>
+      <span class="ver" id="verLabel">—</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="page-head">
+      <div class="page-head-text">
+        <h1 id="pageTitle">状态</h1>
+        <p id="pageSub">正在读取运行状态…</p>
+      </div>
+      <div class="head-actions" id="headActions"></div>
+    </header>
+
+    <div class="views">
+
+      <section class="view" id="view-status">
+        <div class="stat-grid" id="statGrid"></div>
+        <div class="card">
+          <div class="card-head">
+            <h2>程序更新</h2>
+            <button class="btn ghost sm" id="btnCheckApp">检查更新</button>
+          </div>
+          <div id="appUpdateBox" class="empty-line">点击「检查更新」查看是否有新版本</div>
+        </div>
+      </section>
+
+      <section class="view" id="view-search" hidden>
+        <div class="card">
+          <form class="search-bar" id="searchForm">
+            <svg class="search-ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+            <input id="searchInput" placeholder="输入书名或作者，回车搜索" autocomplete="off" spellcheck="false">
+            <button class="btn primary" type="submit">搜索</button>
+          </form>
+          <div class="hint" id="searchHint"></div>
+          <div class="src-row">
+            <label class="chk"><input type="checkbox" id="srcTomato" checked> 番茄官方</label>
+            <label class="chk"><input type="checkbox" id="srcMulti" checked> 多书源</label>
+            <select id="srcSel" title="选择书源站点">
+              <option value="">全部常用站</option>
+            </select>
+          </div>
+          <div class="result-list" id="searchResults"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-jobs" hidden>
+        <div class="card">
+          <div class="card-head"><h2>番茄下载任务</h2><span class="hint" id="jobsHint"></span></div>
+          <div class="job-list" id="jobList"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>多书源下载任务</h2><span class="hint" id="mJobsHint"></span></div>
+          <div class="job-list" id="multiJobList"><div class="empty-line">暂无多书源任务</div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-history" hidden>
+        <div class="card">
+          <div class="card-head">
+            <h2>下载历史</h2>
+            <div class="row">
+              <input class="input sm" id="histKw" placeholder="筛选书名 / 作者">
+              <button class="btn ghost sm" id="btnHist">刷新</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="tbl">
+              <thead><tr><th>时间</th><th>书名</th><th>作者</th><th>BookID</th><th>进度</th><th>结果</th></tr></thead>
+              <tbody id="histBody"></tbody>
+            </table>
+          </div>
+          <div class="hint" id="histHint"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-updates" hidden>
+        <div class="card">
+          <div class="card-head">
+            <h2>本地书籍更新</h2>
+            <button class="btn primary sm" id="btnScan">开始扫描</button>
+          </div>
+          <div class="hint" id="updHint"></div>
+          <div class="table-wrap">
+            <table class="tbl">
+              <thead><tr><th>书名</th><th>状态</th><th>本地</th><th>线上</th><th>操作</th></tr></thead>
+              <tbody id="updBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-library" hidden>
+        <div class="card">
+          <div class="card-head">
+            <h2>下载库</h2>
+            <div class="row">
+              <button class="btn ghost sm" id="libBack">返回上级</button>
+              <button class="btn ghost sm" id="libRefresh">刷新</button>
+            </div>
+          </div>
+          <div class="crumb" id="libPath">/</div>
+          <div class="hint" id="libHint"></div>
+          <div class="table-wrap">
+            <table class="tbl">
+              <thead><tr><th>名称</th><th>大小</th><th>修改时间</th><th>操作</th></tr></thead>
+              <tbody id="libBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-config" hidden>
+        <div class="card">
+          <div class="card-head">
+            <h2>设置</h2>
+            <div class="row">
+              <div class="seg" id="cfgTabs">
+                <button data-tab="form" class="on">表单</button>
+                <button data-tab="raw">YAML</button>
+              </div>
+              <button class="btn primary sm" id="btnSaveCfg">保存</button>
+            </div>
+          </div>
+          <div class="hint" id="cfgMsg"></div>
+          <div id="cfgForm" class="cfg-form"></div>
+          <div id="cfgRaw" hidden>
+            <textarea id="rawYaml" spellcheck="false" placeholder="加载中…"></textarea>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
