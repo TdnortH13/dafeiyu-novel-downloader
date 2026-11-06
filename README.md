@@ -5,6 +5,24 @@
 
 > 本项目仅供个人学习与备份使用。请遵守你所在地区的法律法规，尊重作者与平台的版权。
 
+## 界面预览
+
+**状态总览**
+
+![状态](docs/screenshots/screenshot-status.png)
+
+**搜索（番茄官方源 + 多书源并发检索）**
+
+![搜索](docs/screenshots/screenshot-search-results.png)
+
+**配置（44 项，支持表单与原始 YAML 两种方式）**
+
+![配置](docs/screenshots/screenshot-config.png)
+
+**下载库**
+
+![下载库](docs/screenshots/screenshot-library.png)
+
 ## 特性
 
 - **原生桌面程序**：双击即开，界面在窗口内，不经过浏览器
